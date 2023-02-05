@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import StarterPage from "./pages/page1/StarterPage";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <StarterPage />
+    </>
   );
 }
-
+const GlobalStyle = createGlobalStyle`
+  *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    height: 100vh;
+    width: 100vw;
+  }
+`;
 export default App;
