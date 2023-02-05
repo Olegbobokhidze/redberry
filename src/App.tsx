@@ -1,5 +1,6 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
+import PageResume from "./pages";
 import StarterPage from "./pages/page1/StarterPage";
 import PersonalInfo from "./pages/page2/PersonalInfo";
 import ExperienceInfo from "./pages/page3/ExperienceInfo";
@@ -9,7 +10,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Resume />
+      <PageResume />
     </>
   );
 }

@@ -12,10 +12,11 @@ import {
   PersonalInfoHolder,
   TextHolder,
   Holder,
+  Logo,
 } from "./styled";
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
-
+import RedLogo from "../../assets/RedLogo.png";
 export default function Resume() {
   return (
     <Wrapper>
@@ -34,9 +35,15 @@ export default function Resume() {
             <Paragraph>+995 95 93 21</Paragraph>
           </Holder>
           <Title>ჩემ შესახებ</Title>
-          <Paragraph></Paragraph>
+          <Paragraph>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Reprehenderit voluptatem necessitatibus repellat esse in similique
+            ipsam! Necessitatibus laudantium provident mollitia, repudiandae
+            consequuntur deleniti explicabo nulla fuga pariatur nihil.
+            Reiciendis, natus!
+          </Paragraph>
         </TextHolder>
-        <Image style={{ width: "300px", height: "300px" }} src={Phone} />
+        <Image src={Phone} />
       </PersonalInfoHolder>
       <Line />
       <Title>გამოცდილება</Title>
@@ -64,6 +71,20 @@ export default function Resume() {
         pariatur, consectetur nobis blanditiis alias harum accusantium
         necessitatibus excepturi?
       </Paragraph>
+      <Paragraph>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, enim nemo.
+        Nihil sunt velit tempore totam. Recusandae, ea, quae assumenda molestiae
+        pariatur, consectetur nobis blanditiis alias harum accusantium
+        necessitatibus excepturi?
+      </Paragraph>
+      <Paragraph>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, enim nemo.
+        Nihil sunt velit tempore totam. Recusandae, ea, quae assumenda molestiae
+        pariatur, consectetur nobis blanditiis alias harum accusantium
+        necessitatibus excepturi?
+      </Paragraph>
+
+      <Logo src={RedLogo} alt="logo" />
     </Wrapper>
   );
 }
