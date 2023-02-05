@@ -1,11 +1,12 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import StarterPage from "./pages/page1/StarterPage";
+import PersonalInfo from "./pages/page2/PersonalInfo";
 function App() {
   return (
     <>
       <GlobalStyle />
-      <StarterPage />
+      <PersonalInfo />
     </>
   );
 }
