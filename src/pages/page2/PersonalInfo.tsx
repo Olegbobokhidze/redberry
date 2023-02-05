@@ -7,18 +7,24 @@ import {
   Paragraph,
   ParagraphBold,
   Input,
-  ButtonImg,
-  ButtonNext,
+  Button,
+  ButtonBold,
   Line,
   Holder,
   HolderNameSurname,
   InputArea,
   HeaderHolder,
-} from "./styled";
+  ArrowBackDiv,
+  ArrowImg,
+} from "../styled";
+import Arrow from "../../assets/Vector.png";
 export default function PersonalInfo() {
   return (
     <Wrapper>
       <HeaderWrapper>
+        <ArrowBackDiv>
+          <ArrowImg src={Arrow} alt="arrowback" />
+        </ArrowBackDiv>
         <HeaderHolder>
           <Title>პირადი ინფო</Title>
           <Title>1/3</Title>
@@ -39,7 +45,7 @@ export default function PersonalInfo() {
       </HolderNameSurname>
       <Holder style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <ParagraphBold>პირადი ფოტოს ატვირთვა</ParagraphBold>
-        <ButtonImg>ატვირთვა</ButtonImg>
+        <Button>ატვირთვა</Button>
       </Holder>
       <Holder>
         <ParagraphBold>ჩემ შესახებ (არასავალდებულო)</ParagraphBold>
@@ -55,7 +61,7 @@ export default function PersonalInfo() {
         <Input />
         <Paragraph>უნდა აკმაყოფილებდეს ქართული მობილურის ფორმატს</Paragraph>
       </Holder>
-      <ButtonNext>შემდეგი</ButtonNext>
+      <ButtonBold>შემდეგი</ButtonBold>
     </Wrapper>
   );
 }

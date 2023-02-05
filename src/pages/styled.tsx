@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
-export const HeaderWrapper = styled.div``;
+export const HeaderWrapper = styled.div`
+  position: relative;
+`;
 export const HeaderHolder = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
 `;
-export const Line = styled.hr``;
+export const Line = styled.hr`
+  border: 1px solid #1a1a1a;
+`;
 export const Title = styled.h1`
   font-size: 24px;
 `;
@@ -32,14 +36,14 @@ export const Input = styled.input`
 export const Wrapper = styled.div`
   display: flex;
 
-  width: 50vw;
+  width: 57vw;
   height: 100vh;
   gap: 50px;
   background-color: #f9f9f9;
   flex-direction: column;
-  padding: 50px;
+  padding: 100px;
 `;
-export const ButtonImg = styled.button`
+export const Button = styled.button`
   background-color: #0e80bf;
   width: 107px;
   border: none;
@@ -55,7 +59,7 @@ export const ButtonImg = styled.button`
     opacity: 0.7;
   }
 `;
-export const ButtonNext = styled.button`
+export const ButtonBold = styled.button`
   background-color: #6b40e3;
   width: 151px;
   height: 48px;
@@ -91,4 +95,37 @@ export const InputArea = styled.textarea`
   &:focus {
     outline: none;
   }
+`;
+export const ArrowBackDiv = styled.div`
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  left: -70px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f93b1d;
+  }
+`;
+export const ArrowImg = styled.img`
+  position: absolute;
+`;
+export const SelectInput = styled.select`
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+  padding-left: 10px;
+  border: solid 1px #bcbcbc;
+  background-color: white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+export const Option = styled.option`
+  line-height: 21px;
 `;
