@@ -129,3 +129,18 @@ export const SelectInput = styled.select`
 export const Option = styled.option`
   line-height: 21px;
 `;
+export const ErrorImage = styled.img`
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 7px;
+`;
+export const CheckedImage = styled.img`
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 7px;
+`;
+export const ValidationImages = styled.div`
+  position: relative;
+`;
