@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm, useController, FieldError } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   HeaderWrapper,
   Wrapper,
@@ -7,7 +7,6 @@ import {
   Paragraph,
   ParagraphBold,
   Input,
-  Button,
   ButtonBold,
   Line,
   Holder,
@@ -17,40 +16,68 @@ import {
   ArrowBackDiv,
   ArrowImg,
   ValidationImages,
+  LabelButton,
 } from "../styled";
 import Arrow from "../../assets/Vector.png";
 import { PersonalInfoSchema, InfoSchemaType } from "./InfoTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BorderColorFunction, FunctionShowLogo } from "../../utils";
-export default function PersonalInfo() {
+
+import {
+  BackToStarterPage,
+  BorderColorFunction,
+  convert2base64,
+  FunctionShowLogo,
+} from "../../utils";
+import { useNavigate } from "react-router-dom";
+interface Props {
+  setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>;
+  infoData: InfoSchemaType;
+  setPhoto: (val: string) => void;
+}
+export default function PersonalInfo({
+  setInfoData,
+  infoData,
+  setPhoto,
+}: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    watch,
   } = useForm<InfoSchemaType>({
     resolver: zodResolver(PersonalInfoSchema),
+    mode: "onChange",
   });
-  const convert2base64 = (file: any) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result?.toString());
+  useEffect(() => {
+    const subsc = watch((value) => {
+      setInfoData({
+        ...infoData,
+        name: value.name || "",
+        surname: value.surname || "",
+        about_me: value.about_me || "",
+        email: value.email || "",
+        phone_number: value.phone_number || "",
+      });
+    });
+    return () => {
+      subsc.unsubscribe();
     };
-    reader.readAsDataURL(file);
-  };
+  }, []);
 
   const onSubmit = (data: InfoSchemaType): void => {
-    convert2base64(data.file[0]);
-
     console.log(PersonalInfoSchema.safeParse(data));
   };
-  const [image, setImage] = useState<any>();
-
+  const navigate = useNavigate();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
         <HeaderWrapper>
-          <ArrowBackDiv>
+          <ArrowBackDiv
+            onClick={() =>
+              BackToStarterPage(setInfoData, setPhoto) + navigate("/")
+            }
+          >
             <ArrowImg src={Arrow} alt="arrowback" />
           </ArrowBackDiv>
           <HeaderHolder>
@@ -60,7 +87,6 @@ export default function PersonalInfo() {
           <Line />
         </HeaderWrapper>
         <HolderNameSurname>
-          <img src={image} alt="imageee" />
           <Holder style={{ width: "50%" }}>
             <ParagraphBold style={errors.name ? { color: "#EF5050" } : {}}>
               სახელი
@@ -69,13 +95,15 @@ export default function PersonalInfo() {
             <ValidationImages>
               <Input
                 {...register("name")}
+                value={infoData.name}
                 placeholder="სახელი"
-                style={BorderColorFunction(
-                  control._formState.isSubmitted,
-                  errors.name
-                )}
+                style={BorderColorFunction(watch("name"), errors.name)}
               />
-              {FunctionShowLogo(control._formState.isSubmitted, errors.name)}
+              {FunctionShowLogo(
+                watch("name"),
+                errors.name,
+                control._formState.isSubmitted
+              )}
             </ValidationImages>
             <Paragraph>მინიმუმ 2 ასო, ქართული ასოები</Paragraph>
           </Holder>
@@ -86,13 +114,15 @@ export default function PersonalInfo() {
             <ValidationImages>
               <Input
                 {...register("surname")}
+                value={infoData.surname}
                 placeholder="გვარი"
-                style={BorderColorFunction(
-                  control._formState.isSubmitted,
-                  errors.surname
-                )}
+                style={BorderColorFunction(watch("surname"), errors.surname)}
               />
-              {FunctionShowLogo(control._formState.isSubmitted, errors.surname)}
+              {FunctionShowLogo(
+                watch("surname"),
+                errors.surname,
+                control._formState.isSubmitted
+              )}
             </ValidationImages>
 
             <Paragraph>მინიმუმ 2 ასო, ქართული ასოები</Paragraph>
@@ -102,14 +132,20 @@ export default function PersonalInfo() {
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
           <ParagraphBold>პირადი ფოტოს ატვირთვა</ParagraphBold>
-          <Button>
-            <input type="file" {...register("file")} />
-          </Button>
+
+          <LabelButton htmlFor="fileUpload">ატვირთვა</LabelButton>
+          <input
+            id="fileUpload"
+            style={{ display: "none" }}
+            type="file"
+            onChange={(event) => convert2base64(event, setPhoto)}
+          />
         </Holder>
         <Holder>
           <ParagraphBold>ჩემ შესახებ (არასავალდებულო)</ParagraphBold>
           <InputArea
             {...register("about_me")}
+            value={infoData.about_me}
             placeholder="ზოგადი ინფო შენ შესახებ"
           />
         </Holder>
@@ -120,13 +156,15 @@ export default function PersonalInfo() {
           <ValidationImages>
             <Input
               {...register("email")}
+              value={infoData.email}
               placeholder="testtest@redberry.ge"
-              style={BorderColorFunction(
-                control._formState.isSubmitted,
-                errors.email
-              )}
+              style={BorderColorFunction(watch("email"), errors.email)}
             />
-            {FunctionShowLogo(control._formState.isSubmitted, errors.email)}
+            {FunctionShowLogo(
+              watch("email"),
+              errors.email,
+              control._formState.isSubmitted
+            )}
           </ValidationImages>
 
           <Paragraph>უნდა მთავრდებოდეს @redberry.ge-თი</Paragraph>
@@ -140,15 +178,17 @@ export default function PersonalInfo() {
           <ValidationImages>
             <Input
               style={BorderColorFunction(
-                control._formState.isSubmitted,
+                watch("phone_number"),
                 errors.phone_number
               )}
               {...register("phone_number")}
+              value={infoData.phone_number}
               placeholder="+995 551 12 34 56"
             />
             {FunctionShowLogo(
-              control._formState.isSubmitted,
-              errors.phone_number
+              watch("phone_number"),
+              errors.phone_number,
+              control._formState.isSubmitted
             )}
           </ValidationImages>
           <Paragraph>უნდა აკმაყოფილებდეს ქართული მობილურის ფორმატს</Paragraph>

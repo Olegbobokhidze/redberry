@@ -17,33 +17,55 @@ import {
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";
-export default function Resume() {
+import { FormattedNumber } from "../../utils";
+import { InfoSchemaType } from "../page2/InfoTypes";
+interface Props {
+  infoData: InfoSchemaType;
+  photo: string;
+}
+export default function Resume({ infoData, photo }: Props) {
   return (
     <Wrapper>
       <PersonalInfoHolder>
         <TextHolder>
           <NameSurnameHolder>
-            <Name>blalbla</Name>
-            <Surname>balbla</Surname>
+            <Name>{infoData.name}</Name>
+            <Surname>{infoData.surname}</Surname>
           </NameSurnameHolder>
           <Holder>
-            <PhoneMailLogo src={Mail} />
-            <Paragraph>blabla454@redberry.ge</Paragraph>
+            {infoData.email ? (
+              <>
+                <PhoneMailLogo src={Mail} />
+                <Paragraph
+                  style={{ maxWidth: "300px", wordWrap: "break-word" }}
+                >
+                  {infoData.email}
+                </Paragraph>
+              </>
+            ) : null}
           </Holder>
           <Holder>
-            <PhoneMailLogo src={Phone} />
-            <Paragraph>+995 95 93 21</Paragraph>
+            {infoData.phone_number ? (
+              <>
+                <PhoneMailLogo src={Phone} />
+                <Paragraph
+                  style={{ maxWidth: "200px", wordWrap: "break-word" }}
+                >
+                  {FormattedNumber(infoData.phone_number)}
+                </Paragraph>
+              </>
+            ) : null}
           </Holder>
-          <Title>ჩემ შესახებ</Title>
-          <Paragraph>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Reprehenderit voluptatem necessitatibus repellat esse in similique
-            ipsam! Necessitatibus laudantium provident mollitia, repudiandae
-            consequuntur deleniti explicabo nulla fuga pariatur nihil.
-            Reiciendis, natus!
-          </Paragraph>
+          {infoData.about_me ? (
+            <>
+              <Title>ჩემ შესახებ</Title>
+              <Paragraph style={{ maxWidth: "400px", wordWrap: "break-word" }}>
+                {infoData.about_me}
+              </Paragraph>
+            </>
+          ) : null}
         </TextHolder>
-        <Image src={Phone} />
+        <div>{photo ? <Image src={photo} alt="image" /> : null}</div>
       </PersonalInfoHolder>
       <Line />
       <Title>გამოცდილება</Title>

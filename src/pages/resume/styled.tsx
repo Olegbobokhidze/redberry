@@ -47,11 +47,13 @@ export const Wrapper = styled.div`
 `;
 export const PersonalInfoHolder = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 50px;
 `;
 export const TextHolder = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: 15px;
 `;
 export const Logo = styled.img`

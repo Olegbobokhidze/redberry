@@ -59,6 +59,22 @@ export const Button = styled.button`
     opacity: 0.7;
   }
 `;
+export const LabelButton = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0e80bf;
+  width: 107px;
+  border: none;
+  height: 27px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 export const ButtonBold = styled.button`
   background-color: #6b40e3;
   width: 151px;
@@ -79,7 +95,7 @@ export const ButtonBold = styled.button`
 export const HolderNameSurname = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 45px;
   width: 100%;
 `;
 export const Holder = styled.div`
@@ -94,6 +110,7 @@ export const InputArea = styled.textarea`
   resize: none;
   &:focus {
     outline: none;
+    border: solid 1px #bcbcbc;
   }
 `;
 export const ArrowBackDiv = styled.div`
@@ -133,7 +150,7 @@ export const ErrorImage = styled.img`
   display: none;
   position: absolute;
   top: 12px;
-  right: 7px;
+  right: -30px;
 `;
 export const CheckedImage = styled.img`
   display: none;

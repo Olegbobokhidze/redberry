@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import CircleLogo from "../../assets/redberryCircleLogo.png";
 import BackGroundLogo from "../../assets/backgroundLogo.png";
+import { useNavigate } from "react-router-dom";
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -43,11 +44,14 @@ const CircleParent = styled.div`
   position: relative;
 `;
 export default function StarterPage() {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <Header />
       <ButtonLogoHolder>
-        <Button>რეზიუმეს დამატება</Button>
+        <Button onClick={() => navigate("/personalinfo")}>
+          რეზიუმეს დამატება
+        </Button>
         <CircleParent>
           <Circle src={CircleLogo} alt="circle" />
         </CircleParent>
