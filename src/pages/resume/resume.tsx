@@ -18,12 +18,14 @@ import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";
 import { FormattedNumber } from "../../utils";
-import { InfoSchemaType } from "../page2/InfoTypes";
+import { EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
 interface Props {
   infoData: InfoSchemaType;
   photo: string;
+  expData: ExpTypes;
+  eduData: EduTypes;
 }
-export default function Resume({ infoData, photo }: Props) {
+export default function Resume({ infoData, photo, expData, eduData }: Props) {
   return (
     <Wrapper>
       <PersonalInfoHolder>
@@ -67,45 +69,53 @@ export default function Resume({ infoData, photo }: Props) {
         </TextHolder>
         <div>{photo ? <Image src={photo} alt="image" /> : null}</div>
       </PersonalInfoHolder>
-      <Line />
-      <Title>გამოცდილება</Title>
-      <Paragraph style={{ fontWeight: "bold" }}>
-        React Native Developer, Microsoft
-      </Paragraph>
-      <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
-        2020-09-23 - 2020-09-23
-      </Paragraph>
-      <Paragraph>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-        repellat placeat voluptates maiores facere similique impedit
-        reprehenderit labore earum debitis. At debitis ad earum inventore sunt
-        quidem molestias itaque dolorem.
-      </Paragraph>
-      <Line />
-      <Title>განათლება</Title>
-      <Paragraph>წმ. ანდრიას საპატრიარქოს სასწავლებელი, სტუდენტი</Paragraph>
-      <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
-        2020-09-23
-      </Paragraph>
-      <Paragraph>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, enim nemo.
-        Nihil sunt velit tempore totam. Recusandae, ea, quae assumenda molestiae
-        pariatur, consectetur nobis blanditiis alias harum accusantium
-        necessitatibus excepturi?
-      </Paragraph>
-      <Paragraph>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, enim nemo.
-        Nihil sunt velit tempore totam. Recusandae, ea, quae assumenda molestiae
-        pariatur, consectetur nobis blanditiis alias harum accusantium
-        necessitatibus excepturi?
-      </Paragraph>
-      <Paragraph>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, enim nemo.
-        Nihil sunt velit tempore totam. Recusandae, ea, quae assumenda molestiae
-        pariatur, consectetur nobis blanditiis alias harum accusantium
-        necessitatibus excepturi?
-      </Paragraph>
-
+      {expData.experiences.map((exp, id) => {
+        if (
+          exp.description.length === 0 &&
+          exp.due_date.length === 0 &&
+          exp.start_date.length === 0 &&
+          exp.position.length === 0 &&
+          exp.employer.length === 0
+        ) {
+          return null;
+        } else
+          return (
+            <React.Fragment key={id}>
+              <Line />
+              <Title>გამოცდილება</Title>
+              <Paragraph style={{ fontWeight: "bold" }}>
+                {exp.position}
+              </Paragraph>
+              <Paragraph style={{ fontWeight: "bold" }}>
+                {exp.employer}
+              </Paragraph>
+              <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
+                {exp.start_date} - {exp.due_date}
+              </Paragraph>
+              <Paragraph>{exp.description}</Paragraph>
+            </React.Fragment>
+          );
+      })}
+      {eduData.educations.map((edu, id) => {
+        if (
+          edu.description.length === 0 &&
+          edu.due_date.length === 0 &&
+          edu.institute.length === 0
+        ) {
+          return null;
+        } else
+          return (
+            <React.Fragment key={id}>
+              <Line />
+              <Title>განათლება</Title>
+              <Paragraph>{edu.institute}, სტუდენტი</Paragraph>
+              <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
+                {edu.due_date}
+              </Paragraph>
+              <Paragraph>{edu.description}</Paragraph>
+            </React.Fragment>
+          );
+      })}
       <Logo src={RedLogo} alt="logo" />
     </Wrapper>
   );

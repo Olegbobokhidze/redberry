@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   HeaderWrapper,
@@ -19,13 +19,19 @@ import {
   LabelButton,
 } from "../styled";
 import Arrow from "../../assets/Vector.png";
-import { PersonalInfoSchema, InfoSchemaType } from "./InfoTypes";
+import {
+  PersonalInfoSchema,
+  InfoSchemaType,
+  ExpTypes,
+  EduTypes,
+} from "../InfoTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   BackToStarterPage,
   BorderColorFunction,
   convert2base64,
+  FormattedNumber,
   FunctionShowLogo,
 } from "../../utils";
 import { useNavigate } from "react-router-dom";
@@ -33,11 +39,17 @@ interface Props {
   setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>;
   infoData: InfoSchemaType;
   setPhoto: (val: string) => void;
+  photo: string;
+  setExpData: React.Dispatch<React.SetStateAction<ExpTypes>>;
+  setEduData: React.Dispatch<React.SetStateAction<EduTypes>>;
 }
 export default function PersonalInfo({
   setInfoData,
   infoData,
   setPhoto,
+  photo,
+  setExpData,
+  setEduData,
 }: Props) {
   const {
     register,
@@ -64,19 +76,26 @@ export default function PersonalInfo({
       subsc.unsubscribe();
     };
   }, []);
-
-  const onSubmit = (data: InfoSchemaType): void => {
-    console.log(PersonalInfoSchema.safeParse(data));
-  };
+  const [err, setError] = useState<boolean>(false);
   const navigate = useNavigate();
+  const onSubmit = (data: InfoSchemaType): void => {
+    if (photo && PersonalInfoSchema.safeParse(data).success) {
+      console.log(PersonalInfoSchema.safeParse(data));
+      navigate("/experienceinfo");
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
         <HeaderWrapper>
           <ArrowBackDiv
-            onClick={() =>
-              BackToStarterPage(setInfoData, setPhoto) + navigate("/")
-            }
+            onClick={() => {
+              BackToStarterPage(setInfoData, setPhoto, setExpData, setEduData);
+              navigate("/");
+            }}
           >
             <ArrowImg src={Arrow} alt="arrowback" />
           </ArrowBackDiv>
@@ -128,11 +147,13 @@ export default function PersonalInfo({
             <Paragraph>მინიმუმ 2 ასო, ქართული ასოები</Paragraph>
           </Holder>
         </HolderNameSurname>
+
         <Holder
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
-          <ParagraphBold>პირადი ფოტოს ატვირთვა</ParagraphBold>
-
+          <ParagraphBold style={err ? { color: "#EF5050" } : {}}>
+            პირადი ფოტოს ატვირთვა
+          </ParagraphBold>
           <LabelButton htmlFor="fileUpload">ატვირთვა</LabelButton>
           <input
             id="fileUpload"

@@ -35,9 +35,8 @@ export const Input = styled.input`
 `;
 export const Wrapper = styled.div`
   display: flex;
-
   width: 57vw;
-  height: 100vh;
+  height: 100%;
   gap: 50px;
   background-color: #f9f9f9;
   flex-direction: column;

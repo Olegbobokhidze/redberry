@@ -2,11 +2,9 @@ import { FieldError } from "react-hook-form";
 import Checked from "../assets/true.png";
 import Errorimg from "../assets/false.png";
 import { CheckedImage, ErrorImage } from "../pages/styled";
+import { EduTypes, ExpTypes, InfoSchemaType } from "../pages/InfoTypes";
 
-export const BorderColorFunction = (
-  watch: string | undefined,
-  name: FieldError | undefined
-) => {
+export const BorderColorFunction = (watch: string | undefined, name: any) => {
   return {
     border: name
       ? "1px solid #EF5050"
@@ -14,6 +12,25 @@ export const BorderColorFunction = (
       ? "1px solid #98E37E"
       : "1px solid #bcbcbc",
   };
+};
+export const BorderColorFunction2 = (
+  watch: string | undefined,
+  error: any,
+  touched: any
+) => {
+  if (touched) {
+    return { border: "1px solid #bcbcbc" };
+  } else if (error && watch) {
+    return { border: "1px solid #EF5050" };
+  } else if (!error) {
+    return { border: "1px solid #98E37E" };
+  }
+
+  // border: name
+  // ? "1px solid #EF5050"
+  // : watch && name2
+  // ? "1px solid #98E37E"
+  // : "1px solid #bcbcbc",
 };
 // #EF5050
 export const FunctionShowLogo = (
@@ -44,7 +61,12 @@ export const FormattedNumber = (phonenumber: string | undefined) => {
   );
 };
 
-export const BackToStarterPage = (setInfoData: any, setPhoto: any) => {
+export const BackToStarterPage = (
+  setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>,
+  setPhoto: (val: string) => void,
+  setExpData: React.Dispatch<React.SetStateAction<ExpTypes>>,
+  setEduData: React.Dispatch<React.SetStateAction<EduTypes>>
+) => {
   return (
     setInfoData({
       name: "",
@@ -53,12 +75,33 @@ export const BackToStarterPage = (setInfoData: any, setPhoto: any) => {
       email: "",
       phone_number: "",
     }),
-    setPhoto("")
+    setPhoto(""),
+    setExpData({
+      experiences: [
+        {
+          position: "",
+          description: "",
+          employer: "",
+          due_date: "",
+          start_date: "",
+        },
+      ],
+    }),
+    setEduData({
+      educations: [
+        {
+          institute: "",
+          degree: "",
+          due_date: "",
+          description: "",
+        },
+      ],
+    })
   );
 };
 export const convert2base64 = (
   event: React.ChangeEvent<HTMLInputElement>,
-  setPhoto: any
+  setPhoto: (val: string) => void
 ) => {
   const files = event.target.files;
   if (files) {
