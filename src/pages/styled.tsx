@@ -23,14 +23,20 @@ export const ParagraphBold = styled.p`
   font-size: 16px;
   color: #2e2e2e;
 `;
+interface StatusProps {
+  status?: any;
+}
 export const Input = styled.input`
   width: 100%;
   height: 48px;
   border-radius: 4px;
   padding-left: 10px;
-  border: solid 1px #bcbcbc;
+  border: 1px solid #BCBCBC;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.6);
   }
 `;
 export const Wrapper = styled.div`
@@ -102,14 +108,14 @@ export const Holder = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-export const InputArea = styled.textarea`
+export const InputArea = styled.textarea<StatusProps>`
   height: 103px;
-  border: 1px solid #bcbcbc;
+  border: 1px solid #BCBCBC;
   padding: 10px;
   resize: none;
   &:focus {
-    outline: none;
-    border: solid 1px #bcbcbc;
+    border: none;
+    outline: solid 1px #bcbcbc;
   }
 `;
 export const ArrowBackDiv = styled.div`

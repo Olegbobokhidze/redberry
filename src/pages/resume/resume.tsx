@@ -100,7 +100,8 @@ export default function Resume({ infoData, photo, expData, eduData }: Props) {
         if (
           edu.description.length === 0 &&
           edu.due_date.length === 0 &&
-          edu.institute.length === 0
+          edu.institute.length === 0 &&
+          edu.degree_id === 0
         ) {
           return null;
         } else
@@ -108,7 +109,9 @@ export default function Resume({ infoData, photo, expData, eduData }: Props) {
             <React.Fragment key={id}>
               <Line />
               <Title>განათლება</Title>
-              <Paragraph>{edu.institute}, სტუდენტი</Paragraph>
+              <Paragraph>
+                {edu.institute}, {edu.degree_id}
+              </Paragraph>
               <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
                 {edu.due_date}
               </Paragraph>

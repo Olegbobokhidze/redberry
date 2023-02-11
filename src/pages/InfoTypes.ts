@@ -20,10 +20,10 @@ export const PersonalInfoSchema = z.object({
 export const ExpSchema = z.object({
   experiences: z.array(
     z.object({
-      position: z.string().min(2),
+      position: z.string(),
       employer: z.string().min(2),
-      start_date: z.string(),
-      due_date: z.string(),
+      start_date: z.string().min(1),
+      due_date: z.string().min(1),
       description: z.string(),
     })
   ),
@@ -31,9 +31,9 @@ export const ExpSchema = z.object({
 export const EduSchema = z.object({
   educations: z.array(
     z.object({
-      institute: z.string(),
-      degree: z.string(),
-      due_date: z.string(),
+      institute: z.string().min(1),
+      degree_id: z.number(),
+      due_date: z.string().min(1),
       description: z.string(),
     })
   ),

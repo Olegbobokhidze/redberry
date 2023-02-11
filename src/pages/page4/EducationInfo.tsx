@@ -24,18 +24,26 @@ import { EduSchema, EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
 import { BackToStarterPage } from "../../utils";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useFetchDegrees from "../../hooks/useFetchDegrees";
+import usePostData from "../../hooks/usePostData";
 interface Props {
   setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>;
   setExpData: React.Dispatch<React.SetStateAction<ExpTypes>>;
   setPhoto: (val: string) => void;
   setEduData: React.Dispatch<React.SetStateAction<EduTypes>>;
   eduData: EduTypes;
+  expData: ExpTypes;
+  photo: string;
+  infoData: InfoSchemaType;
 }
 export default function EducationInfo({
   setInfoData,
   setExpData,
   setPhoto,
   eduData,
+  infoData,
+  photo,
+  expData,
   setEduData,
 }: Props) {
   const {
@@ -49,144 +57,171 @@ export default function EducationInfo({
     mode: "onChange",
     defaultValues: eduData,
   });
+  const dat = {
+    name: infoData.name,
+    surname: infoData.surname,
+    email: infoData.email,
+    phone_number: infoData.phone_number,
+    experiences: expData.experiences,
+    educations: eduData.educations,
+    image: photo,
+    about_me: infoData.about_me,
+  };
+  const postData = usePostData(dat);
 
   const { fields, append, update } = useFieldArray({
     control,
     name: "educations",
   });
-  const onSubmit = (data: EduTypes) => {
-    if (EduSchema.safeParse(data).success) {
-      navigate("/educationinfo");
-    }
+  const onSubmit = (data: any) => {
+    postData();
   };
+  const degreeList = useFetchDegrees();
   const navigate = useNavigate();
   return (
-    <Wrapper>
-      <HeaderWrapper>
-        <ArrowBackDiv
-          onClick={() => {
-            BackToStarterPage(setInfoData, setPhoto, setExpData, setEduData);
-            navigate("/");
-          }}
-        >
-          <ArrowImg src={Arrow} alt="arrowback" />
-        </ArrowBackDiv>
-        <HeaderHolder>
-          <Title>განათლება</Title>
-          <Paragraph>3/3</Paragraph>
-        </HeaderHolder>
-        <Line />
-      </HeaderWrapper>
-      {fields.map((field, index) => {
-        return (
-          <React.Fragment key={field.id}>
-            <Holder>
-              <ParagraphBold>სასწავლებელი</ParagraphBold>
-              <Input
-                {...register(`educations.${index}.institute`)}
-                onChange={(e) => {
-                  setEduData({
-                    ...eduData,
-                    educations: eduData.educations.map((exp, i) =>
-                      i === index
-                        ? { ...exp, institute: e.currentTarget.value }
-                        : exp
-                    ),
-                  });
-                }}
-              />
-              <Paragraph>მინიმუმ 2 სიმბოლო</Paragraph>
-            </Holder>
-            <HolderNameSurname>
-              <Holder style={{ width: "50%" }}>
-                <ParagraphBold>ხარისხი</ParagraphBold>
-                <SelectInput
-                  defaultValue="აირჩიეთ ხარისხი"
-                  style={{ paddingRight: "10px" }}
-                >
-                  <Option>საშუალო სკოლის დიპლომი</Option>
-                  <Option>ზოგადსაგანმანათლებლო დიპლომი</Option>
-                  <Option>ბაკალავრი</Option>
-                  <Option>მაგისტრი</Option>
-                  <Option>დოქტორი</Option>
-                  <Option>ასოცირებული ხარისხი</Option>
-                  <Option>სტუდენტი</Option>
-                  <Option>კოლეჯი (ხარისხის გარეშე)</Option>
-                  <Option>სხვა</Option>
-                </SelectInput>
-              </Holder>
-              <Holder style={{ width: "50%" }}>
-                <ParagraphBold>დამთავრების რიცხვი</ParagraphBold>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Wrapper>
+        <HeaderWrapper>
+          <ArrowBackDiv
+            onClick={() => {
+              BackToStarterPage(setInfoData, setPhoto, setExpData, setEduData);
+              navigate("/");
+            }}
+          >
+            <ArrowImg src={Arrow} alt="arrowback" />
+          </ArrowBackDiv>
+          <HeaderHolder>
+            <Title>განათლება</Title>
+            <Paragraph>3/3</Paragraph>
+          </HeaderHolder>
+          <Line />
+        </HeaderWrapper>
+        {fields.map((field, index) => {
+          return (
+            <React.Fragment key={field.id}>
+              <Holder>
+                <ParagraphBold>სასწავლებელი</ParagraphBold>
                 <Input
-                  type="date"
-                  style={{ paddingRight: "10px" }}
-                  {...register(`educations.${index}.due_date`)}
+                  {...register(`educations.${index}.institute`, {
+                    required: true,
+                  })}
                   onChange={(e) => {
                     setEduData({
                       ...eduData,
                       educations: eduData.educations.map((exp, i) =>
                         i === index
-                          ? { ...exp, due_date: e.currentTarget.value }
+                          ? { ...exp, institute: e.currentTarget.value }
+                          : exp
+                      ),
+                    });
+                  }}
+                />
+                <Paragraph>მინიმუმ 2 სიმბოლო</Paragraph>
+              </Holder>
+              <HolderNameSurname>
+                <Holder style={{ width: "50%" }}>
+                  <ParagraphBold>ხარისხი</ParagraphBold>
+                  <SelectInput
+                    defaultValue="აირჩიეთ ხარისხი"
+                    style={{ paddingRight: "10px" }}
+                    {...register(`educations.${index}.degree_id`, {
+                      required: true,
+                    })}
+                    onChange={(e) => {
+                      setEduData({
+                        ...eduData,
+                        educations: eduData.educations.map((exp, i) =>
+                          i === index ? { ...exp, degree_id: i + 1 } : exp
+                        ),
+                      });
+                    }}
+                  >
+                    {degreeList
+                      ? degreeList.map((deg) => (
+                          <Option key={deg.id} value={deg.title}>
+                            {deg.title}
+                          </Option>
+                        ))
+                      : null}
+                  </SelectInput>
+                </Holder>
+                <Holder style={{ width: "50%" }}>
+                  <ParagraphBold>დამთავრების რიცხვი</ParagraphBold>
+                  <Input
+                    type="date"
+                    style={{ paddingRight: "10px" }}
+                    {...register(`educations.${index}.due_date`, {
+                      required: true,
+                    })}
+                    onChange={(e) => {
+                      setEduData({
+                        ...eduData,
+                        educations: eduData.educations.map((exp, i) =>
+                          i === index
+                            ? { ...exp, due_date: e.currentTarget.value }
+                            : exp
+                        ),
+                      });
+                    }}
+                  />
+                </Holder>
+              </HolderNameSurname>
+              <Holder>
+                <ParagraphBold>აღწერა</ParagraphBold>
+                <InputArea
+                  {...register(`educations.${index}.description`)}
+                  onChange={(e) => {
+                    setEduData({
+                      ...eduData,
+                      educations: eduData.educations.map((exp, i) =>
+                        i === index
+                          ? { ...exp, description: e.currentTarget.value }
                           : exp
                       ),
                     });
                   }}
                 />
               </Holder>
-            </HolderNameSurname>
-            <Holder>
-              <ParagraphBold>აღწერა</ParagraphBold>
-              <InputArea
-                {...register(`educations.${index}.description`)}
-                onChange={(e) => {
-                  setEduData({
-                    ...eduData,
-                    educations: eduData.educations.map((exp, i) =>
-                      i === index
-                        ? { ...exp, description: e.currentTarget.value }
-                        : exp
-                    ),
-                  });
-                }}
-              />
-            </Holder>
-            <Line style={{ border: "1px solid #C1C1C1" }} />
-          </React.Fragment>
-        );
-      })}
-      <Holder style={{ maxWidth: "289px" }}>
-        <Button
-          style={{ height: "48px", width: "100%" }}
-          onClick={() => {
-            append({
-              institute: "",
-              degree: "",
-              due_date: "",
-              description: "",
-            });
-            setEduData((prevEduData) => ({
-              ...prevEduData,
-              educations: [
-                ...prevEduData.educations,
-                {
-                  institute: "",
-                  degree: "",
-                  due_date: "",
-                  description: "",
-                },
-              ],
-            }));
-          }}
+              <Line style={{ border: "1px solid #C1C1C1" }} />
+            </React.Fragment>
+          );
+        })}
+        <Holder style={{ maxWidth: "289px" }}>
+          <Button
+            style={{ height: "48px", width: "100%" }}
+            onClick={() => {
+              append({
+                institute: "",
+                degree_id: 0,
+                due_date: "",
+                description: "",
+              });
+              setEduData((prevEduData) => ({
+                ...prevEduData,
+                educations: [
+                  ...prevEduData.educations,
+                  {
+                    institute: "",
+                    degree_id: 0,
+                    due_date: "",
+                    description: "",
+                  },
+                ],
+              }));
+            }}
+          >
+            სხვა სასწავლებლების დამატება
+          </Button>
+        </Holder>
+        <Holder
+          style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
-          სხვა სასწავლებლების დამატება
-        </Button>
-      </Holder>
-      <Holder style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <ButtonBold onClick={() => navigate("/experienceinfo")}>
-          უკან
-        </ButtonBold>
-        <ButtonBold>დასასრული</ButtonBold>
-      </Holder>
-    </Wrapper>
+          <ButtonBold onClick={() => navigate("/experienceinfo")}>
+            უკან
+          </ButtonBold>
+          <ButtonBold>დასასრული</ButtonBold>
+        </Holder>
+      </Wrapper>
+    </form>
   );
 }

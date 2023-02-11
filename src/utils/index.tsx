@@ -4,7 +4,7 @@ import Errorimg from "../assets/false.png";
 import { CheckedImage, ErrorImage } from "../pages/styled";
 import { EduTypes, ExpTypes, InfoSchemaType } from "../pages/InfoTypes";
 
-export const BorderColorFunction = (watch: string | undefined, name: any) => {
+export const BorderColorFunction = (watch: any, name: any) => {
   return {
     border: name
       ? "1px solid #EF5050"
@@ -25,14 +25,7 @@ export const BorderColorFunction2 = (
   } else if (!error) {
     return { border: "1px solid #98E37E" };
   }
-
-  // border: name
-  // ? "1px solid #EF5050"
-  // : watch && name2
-  // ? "1px solid #98E37E"
-  // : "1px solid #bcbcbc",
 };
-// #EF5050
 export const FunctionShowLogo = (
   watch: string | undefined,
   name: FieldError | undefined,
@@ -91,7 +84,7 @@ export const BackToStarterPage = (
       educations: [
         {
           institute: "",
-          degree: "",
+          degree_id: 0,
           due_date: "",
           description: "",
         },
@@ -116,3 +109,4 @@ export const convert2base64 = (
     reader.readAsDataURL(file);
   }
 };
+export const isRequired = () => {};

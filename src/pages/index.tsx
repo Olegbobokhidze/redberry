@@ -8,6 +8,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { EduTypes, ExpTypes, InfoSchemaType } from "./InfoTypes";
 import StarterPage from "./page1/StarterPage";
 import ExperienceInfo from "./page3/ExperienceInfo";
+import { z } from "zod";
+import LastPage from "./lastpage/lastPage";
 const Holder = styled.div`
   display: flex;
   background-color: #f9f9f9;
@@ -35,7 +37,7 @@ export default function PageResume() {
     educations: [
       {
         institute: "",
-        degree: "",
+        degree_id: 0,
         due_date: "",
         description: "",
       },
@@ -80,17 +82,31 @@ export default function PageResume() {
               setExpData={setExpData}
               setPhoto={setPhoto}
               eduData={eduData}
+              expData={expData}
+              infoData={infoData}
+              photo={photo}
+              setEduData={setEduData}
+            />
+          }
+        />
+        <Route
+          path="resume"
+          element={
+            <LastPage
+              setInfoData={setInfoData}
+              setExpData={setExpData}
+              setPhoto={setPhoto}
               setEduData={setEduData}
             />
           }
         />
       </Routes>
-      {location.pathname === "/" ? null : (
+      {location.pathname === "/" || location.pathname === "/resume" ? null : (
         <Resume
           eduData={eduData}
+          expData={expData}
           infoData={infoData}
           photo={photo}
-          expData={expData}
         />
       )}
     </Holder>

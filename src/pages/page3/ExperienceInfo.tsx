@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HeaderWrapper,
   Wrapper,
@@ -101,7 +101,9 @@ export default function ExperienceInfo({
                 </ParagraphBold>
                 <ValidationImages>
                   <Input
-                    {...register(`experiences.${index}.position`)}
+                    {...register(`experiences.${index}.position`, {
+                      required: true,
+                    })}
                     style={
                       index > 0 && !watch(`experiences.${index}.position`)
                         ? { border: "1px solid #bcbcbc" }
@@ -142,7 +144,9 @@ export default function ExperienceInfo({
                 </ParagraphBold>
                 <ValidationImages>
                   <Input
-                    {...register(`experiences.${index}.employer`)}
+                    {...register(`experiences.${index}.employer`, {
+                      required: true,
+                    })}
                     style={
                       index > 0 && !watch(`experiences.${index}.employer`)
                         ? { border: "1px solid #bcbcbc" }
@@ -184,7 +188,9 @@ export default function ExperienceInfo({
                   </ParagraphBold>
                   <ValidationImages>
                     <Input
-                      {...register(`experiences.${index}.start_date`)}
+                      {...register(`experiences.${index}.start_date`, {
+                        required: true,
+                      })}
                       type="date"
                       style={
                         index > 0 && !watch(`experiences.${index}.start_date`)
@@ -219,7 +225,9 @@ export default function ExperienceInfo({
                   </ParagraphBold>
                   <ValidationImages>
                     <Input
-                      {...register(`experiences.${index}.due_date`)}
+                      {...register(`experiences.${index}.due_date`, {
+                        required: true,
+                      })}
                       type="date"
                       style={
                         index > 0 && !watch(`experiences.${index}.due_date`)

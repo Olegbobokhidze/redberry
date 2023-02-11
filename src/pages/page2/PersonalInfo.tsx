@@ -76,6 +76,7 @@ export default function PersonalInfo({
       subsc.unsubscribe();
     };
   }, []);
+  const [border, setBorder] = useState<string>("default");
   const [err, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const onSubmit = (data: InfoSchemaType): void => {
@@ -86,7 +87,6 @@ export default function PersonalInfo({
       setError(true);
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
@@ -113,8 +113,8 @@ export default function PersonalInfo({
 
             <ValidationImages>
               <Input
-                {...register("name")}
-                value={infoData.name}
+                {...register("name", { required: true })}
+                value={infoData.name ? infoData.name : ""}
                 placeholder="სახელი"
                 style={BorderColorFunction(watch("name"), errors.name)}
               />
@@ -132,7 +132,7 @@ export default function PersonalInfo({
             </ParagraphBold>
             <ValidationImages>
               <Input
-                {...register("surname")}
+                {...register("surname", { required: true })}
                 value={infoData.surname}
                 placeholder="გვარი"
                 style={BorderColorFunction(watch("surname"), errors.surname)}
@@ -176,7 +176,7 @@ export default function PersonalInfo({
           </ParagraphBold>
           <ValidationImages>
             <Input
-              {...register("email")}
+              {...register("email", { required: true })}
               value={infoData.email}
               placeholder="testtest@redberry.ge"
               style={BorderColorFunction(watch("email"), errors.email)}
@@ -202,7 +202,7 @@ export default function PersonalInfo({
                 watch("phone_number"),
                 errors.phone_number
               )}
-              {...register("phone_number")}
+              {...register("phone_number", { required: true })}
               value={infoData.phone_number}
               placeholder="+995 551 12 34 56"
             />

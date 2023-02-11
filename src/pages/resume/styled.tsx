@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 50px;
   width: 43vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
   gap: 10px;
   position: relative;
