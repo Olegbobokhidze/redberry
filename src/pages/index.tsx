@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import EducationInfo from "./page4/EducationInfo";
 import Resume from "./resume/resume";
 import styled from "styled-components";
@@ -8,7 +8,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { EduTypes, ExpTypes, InfoSchemaType } from "./InfoTypes";
 import StarterPage from "./page1/StarterPage";
 import ExperienceInfo from "./page3/ExperienceInfo";
-import { z } from "zod";
 import LastPage from "./lastpage/lastPage";
 const Holder = styled.div`
   display: flex;

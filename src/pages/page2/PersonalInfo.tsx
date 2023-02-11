@@ -31,7 +31,6 @@ import {
   BackToStarterPage,
   BorderColorFunction,
   convert2base64,
-  FormattedNumber,
   FunctionShowLogo,
 } from "../../utils";
 import { useNavigate } from "react-router-dom";
@@ -76,7 +75,6 @@ export default function PersonalInfo({
       subsc.unsubscribe();
     };
   }, []);
-  const [border, setBorder] = useState<string>("default");
   const [err, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const onSubmit = (data: InfoSchemaType): void => {

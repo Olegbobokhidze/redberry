@@ -14,7 +14,7 @@ import {
   Wrapper,
 } from "../resume/styled";
 import Arrow from "../../assets/Vector.png";
-import { ArrowBackDiv, ArrowImg, Holder } from "../styled";
+import { Holder } from "../styled";
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";

@@ -109,4 +109,24 @@ export const convert2base64 = (
     reader.readAsDataURL(file);
   }
 };
-export const isRequired = () => {};
+export const isRequired = (obj: {}, id: number) => {
+  if (id !== 0 && Object.values(obj).every((value) => !value)) {
+    return false;
+  } else if (id !== 0 && Object.values(obj).every((value) => value !== "")) {
+    return true;
+  } else {
+    return true;
+  }
+};
+
+export function removeEmptyObjects(
+  array: object[],
+  data: React.Dispatch<React.SetStateAction<any>>
+) {
+  const nonEmptyExperiences = array.filter((obj) => {
+    return Object.values(obj).every((val) => val !== "" && val !== null);
+  });
+  data((prevExpData: any) => ({
+    experiences: nonEmptyExperiences,
+  }));
+}

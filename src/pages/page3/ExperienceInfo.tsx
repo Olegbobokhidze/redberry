@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   HeaderWrapper,
   Wrapper,
@@ -20,17 +20,14 @@ import {
 import Arrow from "../../assets/Vector.png";
 import { EduTypes, ExpSchema, ExpTypes, InfoSchemaType } from "../InfoTypes";
 import { useNavigate } from "react-router-dom";
-import {
-  useFieldArray,
-  useForm,
-  Controller,
-  appendErrors,
-} from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BackToStarterPage,
   BorderColorFunction,
   FunctionShowLogo,
+  isRequired,
+  removeEmptyObjects,
 } from "../../utils";
 interface Props {
   setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>;
@@ -58,13 +55,21 @@ export default function ExperienceInfo({
     defaultValues: expData,
   });
 
-  const { fields, append, update } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control,
     name: "experiences",
   });
   const onSubmit = (data: ExpTypes) => {
     if (ExpSchema.safeParse(data).success) {
-      navigate("/educationinfo");
+      const hasAtLeastOneValue = data.experiences.some((obj) => {
+        return Object.values(obj).every((val) => val === "" || val === null);
+      });
+      if (!hasAtLeastOneValue) {
+        removeEmptyObjects(data.experiences, setExpData);
+        navigate("/educationinfo");
+      } else {
+        return;
+      }
     }
   };
   const navigate = useNavigate();
@@ -86,6 +91,7 @@ export default function ExperienceInfo({
           </HeaderHolder>
           <Line />
         </HeaderWrapper>
+        <Button type="button">remove aba</Button>
         {fields.map((field, index) => {
           return (
             <React.Fragment key={field.id}>
@@ -101,9 +107,8 @@ export default function ExperienceInfo({
                 </ParagraphBold>
                 <ValidationImages>
                   <Input
-                    {...register(`experiences.${index}.position`, {
-                      required: true,
-                    })}
+                    {...register(`experiences.${index}.position`)}
+                    minLength={2}
                     style={
                       index > 0 && !watch(`experiences.${index}.position`)
                         ? { border: "1px solid #bcbcbc" }
@@ -144,15 +149,14 @@ export default function ExperienceInfo({
                 </ParagraphBold>
                 <ValidationImages>
                   <Input
-                    {...register(`experiences.${index}.employer`, {
-                      required: true,
-                    })}
+                    {...register(`experiences.${index}.employer`)}
+                    minLength={2}
                     style={
-                      index > 0 && !watch(`experiences.${index}.employer`)
+                      index > 0 && !watch(`experiences.${index}.position`)
                         ? { border: "1px solid #bcbcbc" }
                         : BorderColorFunction(
-                            watch(`experiences.${index}.employer`),
-                            errors.experiences?.[index]?.employer
+                            watch(`experiences.${index}.position`),
+                            errors.experiences?.[index]?.position
                           )
                     }
                     onChange={(e) => {
@@ -188,9 +192,7 @@ export default function ExperienceInfo({
                   </ParagraphBold>
                   <ValidationImages>
                     <Input
-                      {...register(`experiences.${index}.start_date`, {
-                        required: true,
-                      })}
+                      {...register(`experiences.${index}.start_date`)}
                       type="date"
                       style={
                         index > 0 && !watch(`experiences.${index}.start_date`)
@@ -225,9 +227,7 @@ export default function ExperienceInfo({
                   </ParagraphBold>
                   <ValidationImages>
                     <Input
-                      {...register(`experiences.${index}.due_date`, {
-                        required: true,
-                      })}
+                      {...register(`experiences.${index}.due_date`)}
                       type="date"
                       style={
                         index > 0 && !watch(`experiences.${index}.due_date`)
@@ -282,6 +282,7 @@ export default function ExperienceInfo({
 
         <Holder style={{ maxWidth: "289px" }}>
           <Button
+            type="button"
             style={{ height: "48px", width: "100%" }}
             onClick={() => {
               append({
@@ -312,7 +313,7 @@ export default function ExperienceInfo({
         <Holder
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
-          <ButtonBold onClick={() => navigate("/personalinfo")}>
+          <ButtonBold onClick={() => navigate("/personalinfo")} type="button">
             უკან
           </ButtonBold>
           <ButtonBold type="submit">შემდეგი</ButtonBold>

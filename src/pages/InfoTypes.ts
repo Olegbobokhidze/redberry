@@ -21,9 +21,9 @@ export const ExpSchema = z.object({
   experiences: z.array(
     z.object({
       position: z.string(),
-      employer: z.string().min(2),
-      start_date: z.string().min(1),
-      due_date: z.string().min(1),
+      employer: z.string(),
+      start_date: z.string(),
+      due_date: z.string(),
       description: z.string(),
     })
   ),

@@ -21,7 +21,7 @@ import {
 import Arrow from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
 import { EduSchema, EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
-import { BackToStarterPage } from "../../utils";
+import { BackToStarterPage, isRequired } from "../../utils";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useFetchDegrees from "../../hooks/useFetchDegrees";
@@ -103,7 +103,7 @@ export default function EducationInfo({
                 <ParagraphBold>სასწავლებელი</ParagraphBold>
                 <Input
                   {...register(`educations.${index}.institute`, {
-                    required: true,
+                    required: isRequired(eduData.educations[index], index),
                   })}
                   onChange={(e) => {
                     setEduData({
@@ -125,7 +125,7 @@ export default function EducationInfo({
                     defaultValue="აირჩიეთ ხარისხი"
                     style={{ paddingRight: "10px" }}
                     {...register(`educations.${index}.degree_id`, {
-                      required: true,
+                      required: isRequired(eduData.educations[index], index),
                     })}
                     onChange={(e) => {
                       setEduData({
@@ -151,7 +151,7 @@ export default function EducationInfo({
                     type="date"
                     style={{ paddingRight: "10px" }}
                     {...register(`educations.${index}.due_date`, {
-                      required: true,
+                      required: isRequired(eduData.educations[index], index),
                     })}
                     onChange={(e) => {
                       setEduData({
@@ -169,7 +169,9 @@ export default function EducationInfo({
               <Holder>
                 <ParagraphBold>აღწერა</ParagraphBold>
                 <InputArea
-                  {...register(`educations.${index}.description`)}
+                  {...register(`educations.${index}.description`, {
+                    required: isRequired(eduData.educations[index], index),
+                  })}
                   onChange={(e) => {
                     setEduData({
                       ...eduData,
