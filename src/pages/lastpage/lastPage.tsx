@@ -34,6 +34,7 @@ const ResumeDiv = styled.div`
   height: 100vh;
   position: relative;
   background-color: white;
+  padding: 40px;
 `;
 const ArrowImage = styled.img``;
 const ArrowBack = styled.div`
@@ -51,6 +52,15 @@ const ArrowBack = styled.div`
   &:hover {
     background-color: #f93b1d;
   }
+`;
+const Div = styled.div`
+  width: 427px;
+  height: 167px;
+  padding: 30px;
+  border-radius: 10px;
+  align-self: flex-start;
+  background-color: white;
+  box-shadow: 5px 10px 20px 3px rgba(0, 0, 0, 0.25);
 `;
 interface Props {
   setInfoData: React.Dispatch<React.SetStateAction<InfoSchemaType>>;
@@ -77,7 +87,13 @@ export default function LastPage({
       >
         <ArrowImage src={Arrow} alt="arrowback" />
       </ArrowBack>
-      <Wrapper style={{ border: "2px solid black", height: "100%" }}>
+      <Wrapper
+        style={{
+          border: "2px solid black",
+          height: "100%",
+          marginRight: "50px",
+        }}
+      >
         <PersonalInfoHolder>
           <TextHolder>
             <NameSurnameHolder>
@@ -178,6 +194,9 @@ export default function LastPage({
         })}
         <Logo src={RedLogo} alt="logo" />
       </Wrapper>
+      <Div>
+        <Paragraph>რეზიუმე წარმატებით გაიგზავნა 🎉</Paragraph>
+      </Div>
     </ResumeDiv>
   );
 }
