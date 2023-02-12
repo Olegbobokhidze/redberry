@@ -130,3 +130,24 @@ export function removeEmptyObjects(
     experiences: nonEmptyExperiences,
   }));
 }
+export const setDegreeTitle = (deg: number) => {
+  if (deg === 1) {
+    return "საშუალო სკოლის დიპლომი";
+  } else if (deg === 2) {
+    return "ზოგადსაგანმანათლებლო დიპლომი";
+  } else if (deg === 3) {
+    return "ბაკალავრი";
+  } else if (deg === 4) {
+    return "მაგისტრი";
+  } else if (deg === 5) {
+    return "დოქტორი";
+  } else if (deg === 6) {
+    return "ასოცირებული ხარისხი";
+  } else if (deg === 7) {
+    return "სტუდენტი";
+  } else if (deg === 8) {
+    return "კოლეჯი(ხარისხის გარეშე)";
+  } else if (deg === 9) {
+    return "სხვა";
+  }
+};

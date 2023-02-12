@@ -128,7 +128,6 @@ export default function EducationInfo({
                 <Holder style={{ width: "50%" }}>
                   <ParagraphBold>ხარისხი</ParagraphBold>
                   <SelectInput
-                    defaultValue="აირჩიეთ ხარისხი"
                     style={{ paddingRight: "10px" }}
                     {...register(`educations.${index}.degree_id`)}
                     onChange={(e) => {

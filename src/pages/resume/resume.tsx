@@ -17,7 +17,7 @@ import {
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";
-import { FormattedNumber } from "../../utils";
+import { FormattedNumber, setDegreeTitle } from "../../utils";
 import { EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
 interface Props {
   infoData: InfoSchemaType;
@@ -110,7 +110,7 @@ export default function Resume({ infoData, photo, expData, eduData }: Props) {
               <Line />
               <Title>განათლება</Title>
               <Paragraph>
-                {edu.institute}, {edu.degree_id}
+                {edu.institute}, {setDegreeTitle(edu.degree_id)}
               </Paragraph>
               <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
                 {edu.due_date}
