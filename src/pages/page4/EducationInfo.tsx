@@ -21,7 +21,7 @@ import {
 import Arrow from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
 import { EduSchema, EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
-import { BackToStarterPage, isRequired } from "../../utils";
+import { BackToStarterPage, isRequired, setDegreeTitle } from "../../utils";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useFetchDegrees from "../../hooks/useFetchDegrees";
@@ -84,6 +84,7 @@ export default function EducationInfo({
     });
     return k;
   };
+  console.log(eduData);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
@@ -129,6 +130,7 @@ export default function EducationInfo({
                   <ParagraphBold>ხარისხი</ParagraphBold>
                   <SelectInput
                     style={{ paddingRight: "10px" }}
+                    value={eduData.educations?.[index].degree_id}
                     {...register(`educations.${index}.degree_id`)}
                     onChange={(e) => {
                       setEduData({
