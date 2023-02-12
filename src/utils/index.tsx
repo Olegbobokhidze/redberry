@@ -4,7 +4,10 @@ import Errorimg from "../assets/false.png";
 import { CheckedImage, ErrorImage } from "../pages/styled";
 import { EduTypes, ExpTypes, InfoSchemaType } from "../pages/InfoTypes";
 
-export const BorderColorFunction = (watch: any, name: any) => {
+export const BorderColorFunction = (
+  watch: string | undefined,
+  name: FieldError | undefined
+) => {
   return {
     border: name
       ? "1px solid #EF5050"

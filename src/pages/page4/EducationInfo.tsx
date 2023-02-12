@@ -73,17 +73,13 @@ export default function EducationInfo({
     control,
     name: "educations",
   });
-  const onSubmit = (data: any) => {
-    postData();
+  const onSubmit = (data: EduTypes) => {
+    if (EduSchema.safeParse(data).success) {
+      postData();
+    }
   };
   const degreeList = useFetchDegrees();
   const navigate = useNavigate();
-  const f = () => {
-    const k = degreeList.map((deg) => {
-      return deg.id;
-    });
-    return k;
-  };
   console.log(eduData);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

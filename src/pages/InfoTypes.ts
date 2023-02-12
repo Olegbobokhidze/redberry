@@ -19,13 +19,20 @@ export const PersonalInfoSchema = z.object({
 });
 export const ExpSchema = z.object({
   experiences: z.array(
-    z.object({
-      position: z.string(),
-      employer: z.string(),
-      start_date: z.string(),
-      due_date: z.string(),
-      description: z.string(),
-    })
+    z
+      .object({
+        position: z.string(),
+        employer: z.string(),
+        start_date: z.string(),
+        due_date: z.string(),
+        description: z.string(),
+      })
+      .refine(
+        (data) =>
+          Object.values(data).every((val) => val.length > 0) ||
+          Object.values(data).every((val) => val.length === 0),
+        "must be every field empty or filled"
+      )
   ),
 });
 export const EduSchema = z.object({

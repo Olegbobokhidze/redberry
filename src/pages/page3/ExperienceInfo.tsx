@@ -59,17 +59,17 @@ export default function ExperienceInfo({
     control,
     name: "experiences",
   });
+
   const onSubmit = (data: ExpTypes) => {
-    if (ExpSchema.safeParse(data).success) {
-      const hasAtLeastOneValue = data.experiences.some((obj) => {
-        return Object.values(obj).every((val) => val === "" || val === null);
-      });
-      if (!hasAtLeastOneValue) {
-        removeEmptyObjects(data.experiences, setExpData);
-        navigate("/educationinfo");
-      } else {
-        return;
-      }
+    const everyValueIsEmpty = data.experiences.some((obj) => {
+      return Object.values(obj).every((val) => val === "" || val === null);
+    });
+    if (everyValueIsEmpty) {
+      removeEmptyObjects(data.experiences, setExpData);
+      navigate("/educationinfo");
+    } else {
+      console.log(ExpSchema.parse(data));
+      navigate("/educationinfo");
     }
   };
   const navigate = useNavigate();
@@ -108,15 +108,10 @@ export default function ExperienceInfo({
                 <ValidationImages>
                   <Input
                     {...register(`experiences.${index}.position`)}
-                    minLength={2}
-                    style={
-                      index > 0 && !watch(`experiences.${index}.position`)
-                        ? { border: "1px solid #bcbcbc" }
-                        : BorderColorFunction(
-                            watch(`experiences.${index}.position`),
-                            errors.experiences?.[index]?.position
-                          )
-                    }
+                    style={BorderColorFunction(
+                      watch(`experiences.${index}.position`),
+                      errors.experiences?.[index]?.position
+                    )}
                     onChange={(e) => {
                       setExpData({
                         ...expData,
