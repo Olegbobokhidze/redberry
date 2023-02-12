@@ -13,7 +13,7 @@ function App() {
 const GlobalStyle = createGlobalStyle`
 @font-face {
     font-family:"Helvetica Neue";
-    src: local("HelveticaNeue"), url("./font/HelveticaNeue.ttc") format("truetype");
+    src: local("HelveticaNeue"), url("./font/HelveticaNeue.ttc") format("TTC");
   }
   *{
     box-sizing: border-box;

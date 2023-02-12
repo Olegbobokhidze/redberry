@@ -78,6 +78,12 @@ export default function EducationInfo({
   };
   const degreeList = useFetchDegrees();
   const navigate = useNavigate();
+  const f = () => {
+    const k = degreeList.map((deg) => {
+      return deg.id;
+    });
+    return k;
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
@@ -124,21 +130,24 @@ export default function EducationInfo({
                   <SelectInput
                     defaultValue="აირჩიეთ ხარისხი"
                     style={{ paddingRight: "10px" }}
-                    {...register(`educations.${index}.degree_id`, {
-                      required: isRequired(eduData.educations[index], index),
-                    })}
+                    {...register(`educations.${index}.degree_id`)}
                     onChange={(e) => {
                       setEduData({
                         ...eduData,
-                        educations: eduData.educations.map((exp, i) =>
-                          i === index ? { ...exp, degree_id: i + 1 } : exp
+                        educations: eduData.educations.map((edu, i) =>
+                          i === index
+                            ? {
+                                ...edu,
+                                degree_id: Number(e.target.value),
+                              }
+                            : edu
                         ),
                       });
                     }}
                   >
                     {degreeList
                       ? degreeList.map((deg) => (
-                          <Option key={deg.id} value={deg.title}>
+                          <Option key={deg.id} value={deg.id}>
                             {deg.title}
                           </Option>
                         ))
