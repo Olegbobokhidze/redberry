@@ -179,7 +179,14 @@ export default function LastPage({
             return null;
           } else
             return (
-              <React.Fragment key={id}>
+              <div
+                key={id}
+                style={
+                  state.educations[state.educations.length - 1]
+                    ? { marginBottom: "100px" }
+                    : { marginBottom: "30px" }
+                }
+              >
                 <Line />
                 <Title>განათლება</Title>
                 <Paragraph>
@@ -189,7 +196,7 @@ export default function LastPage({
                   {edu.due_date}
                 </Paragraph>
                 <Paragraph>{edu.description}</Paragraph>
-              </React.Fragment>
+              </div>
             );
         })}
         <Logo src={RedLogo} alt="logo" />

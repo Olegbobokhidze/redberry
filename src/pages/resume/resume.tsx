@@ -26,6 +26,14 @@ interface Props {
   eduData: EduTypes;
 }
 export default function Resume({ infoData, photo, expData, eduData }: Props) {
+  const lastEdu = (arr: any) => {
+    const lastDiv = arr[arr.length - 1];
+    if (lastDiv) {
+      return { marginBottom: "100px" };
+    } else {
+      return { marginBottom: "10px" };
+    }
+  };
   return (
     <Wrapper>
       <PersonalInfoHolder>
@@ -106,17 +114,24 @@ export default function Resume({ infoData, photo, expData, eduData }: Props) {
           return null;
         } else
           return (
-            <React.Fragment key={id}>
+            <div
+              key={id}
+              style={
+                eduData.educations[eduData.educations.length - 1]
+                  ? { marginBottom: "100px" }
+                  : { marginBottom: "30px" }
+              }
+            >
               <Line />
               <Title>განათლება</Title>
               <Paragraph>
-                {edu.institute},{/* {setDegreeTitle(edu.degree_id)} */}
+                {edu.institute},{edu.degree_id}
               </Paragraph>
               <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
                 {edu.due_date}
               </Paragraph>
               <Paragraph>{edu.description}</Paragraph>
-            </React.Fragment>
+            </div>
           );
       })}
       <Logo src={RedLogo} alt="logo" />

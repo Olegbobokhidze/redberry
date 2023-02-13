@@ -17,6 +17,7 @@ import {
   ArrowImg,
   SelectInput,
   Option,
+  ValidationImages,
 } from "../styled";
 import Arrow from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ import { EduSchema, EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
 import {
   BackToStarterPage,
   BorderColorFunction,
+  FunctionShowLogo,
   isRequired,
   removeEmpty,
   removeEmptyObjects,
@@ -108,26 +110,33 @@ export default function EducationInfo({
             <React.Fragment key={field.id}>
               <Holder>
                 <ParagraphBold>სასწავლებელი</ParagraphBold>
-                <Input
-                  value={eduData.educations[index]?.institute}
-                  {...register(`educations.${index}.institute`, {
-                    required: isRequired(eduData.educations[index], index),
-                  })}
-                  style={BorderColorFunction(
+                <ValidationImages>
+                  <Input
+                    value={eduData.educations[index]?.institute}
+                    {...register(`educations.${index}.institute`, {
+                      required: isRequired(eduData.educations[index], index),
+                    })}
+                    style={BorderColorFunction(
+                      watch(`educations.${index}.institute`),
+                      errors.educations?.[index]?.institute
+                    )}
+                    onChange={(e) => {
+                      setEduData({
+                        ...eduData,
+                        educations: eduData.educations.map((exp, i) =>
+                          i === index
+                            ? { ...exp, institute: e.currentTarget.value }
+                            : exp
+                        ),
+                      });
+                    }}
+                  />
+                  {FunctionShowLogo(
                     watch(`educations.${index}.institute`),
-                    errors.educations?.[index]?.institute
+                    errors.educations?.[index]?.institute,
+                    control._formState.isSubmitted
                   )}
-                  onChange={(e) => {
-                    setEduData({
-                      ...eduData,
-                      educations: eduData.educations.map((exp, i) =>
-                        i === index
-                          ? { ...exp, institute: e.currentTarget.value }
-                          : exp
-                      ),
-                    });
-                  }}
-                />
+                </ValidationImages>
                 <Paragraph>მინიმუმ 2 სიმბოლო</Paragraph>
               </Holder>
               <HolderNameSurname>
@@ -187,6 +196,7 @@ export default function EducationInfo({
               </HolderNameSurname>
               <Holder>
                 <ParagraphBold>აღწერა</ParagraphBold>
+
                 <InputArea
                   {...register(`educations.${index}.description`, {
                     required: isRequired(eduData.educations[index], index),
