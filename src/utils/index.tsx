@@ -133,6 +133,11 @@ export function removeEmptyObjects(
     experiences: nonEmptyExperiences,
   }));
 }
+export function removeEmpty(array: object[]): object[] {
+  return array.filter((obj) => {
+    return Object.values(obj).some((val) => val);
+  });
+}
 export const setDegreeTitle = (deg: number) => {
   if (deg === 1) {
     return "საშუალო სკოლის დიპლომი";

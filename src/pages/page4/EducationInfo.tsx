@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HeaderWrapper,
   Wrapper,
@@ -21,7 +21,14 @@ import {
 import Arrow from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
 import { EduSchema, EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
-import { BackToStarterPage, isRequired, setDegreeTitle } from "../../utils";
+import {
+  BackToStarterPage,
+  BorderColorFunction,
+  isRequired,
+  removeEmpty,
+  removeEmptyObjects,
+  setDegreeTitle,
+} from "../../utils";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useFetchDegrees from "../../hooks/useFetchDegrees";
@@ -57,7 +64,7 @@ export default function EducationInfo({
     mode: "onChange",
     defaultValues: eduData,
   });
-  const dat = {
+  const data = {
     name: infoData.name,
     surname: infoData.surname,
     email: infoData.email,
@@ -67,20 +74,17 @@ export default function EducationInfo({
     image: photo,
     about_me: infoData.about_me,
   };
-  const postData = usePostData(dat);
-
-  const { fields, append, update } = useFieldArray({
+  const postData = usePostData(data);
+  const { fields, append } = useFieldArray({
     control,
     name: "educations",
   });
-  const onSubmit = (data: EduTypes) => {
-    if (EduSchema.safeParse(data).success) {
-      postData();
-    }
+  const onSubmit = async (data: EduTypes) => {
+    await postData();
   };
+
   const degreeList = useFetchDegrees();
   const navigate = useNavigate();
-  console.log(eduData);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Wrapper>
@@ -105,9 +109,14 @@ export default function EducationInfo({
               <Holder>
                 <ParagraphBold>სასწავლებელი</ParagraphBold>
                 <Input
+                  value={eduData.educations[index]?.institute}
                   {...register(`educations.${index}.institute`, {
                     required: isRequired(eduData.educations[index], index),
                   })}
+                  style={BorderColorFunction(
+                    watch(`educations.${index}.institute`),
+                    errors.educations?.[index]?.institute
+                  )}
                   onChange={(e) => {
                     setEduData({
                       ...eduData,
@@ -125,22 +134,23 @@ export default function EducationInfo({
                 <Holder style={{ width: "50%" }}>
                   <ParagraphBold>ხარისხი</ParagraphBold>
                   <SelectInput
-                    style={{ paddingRight: "10px" }}
-                    value={eduData.educations?.[index].degree_id}
-                    {...register(`educations.${index}.degree_id`)}
-                    onChange={(e) => {
-                      setEduData({
-                        ...eduData,
-                        educations: eduData.educations.map((edu, i) =>
-                          i === index
-                            ? {
-                                ...edu,
-                                degree_id: Number(e.target.value),
-                              }
-                            : edu
-                        ),
-                      });
-                    }}
+                    value={Number(eduData.educations?.[index].degree_id)}
+                    {...(register(`educations.${index}.degree_id`),
+                    {
+                      onChange: (e) => {
+                        setEduData({
+                          ...eduData,
+                          educations: eduData.educations.map((edu, i) =>
+                            i === index
+                              ? {
+                                  ...edu,
+                                  degree_id: Number(e.target.value),
+                                }
+                              : edu
+                          ),
+                        });
+                      },
+                    })}
                   >
                     {degreeList
                       ? degreeList.map((deg) => (
@@ -155,7 +165,10 @@ export default function EducationInfo({
                   <ParagraphBold>დამთავრების რიცხვი</ParagraphBold>
                   <Input
                     type="date"
-                    style={{ paddingRight: "10px" }}
+                    style={BorderColorFunction(
+                      watch(`educations.${index}.due_date`),
+                      errors.educations?.[index]?.due_date
+                    )}
                     {...register(`educations.${index}.due_date`, {
                       required: isRequired(eduData.educations[index], index),
                     })}
@@ -178,6 +191,10 @@ export default function EducationInfo({
                   {...register(`educations.${index}.description`, {
                     required: isRequired(eduData.educations[index], index),
                   })}
+                  style={BorderColorFunction(
+                    watch(`educations.${index}.description`),
+                    errors.educations?.[index]?.description
+                  )}
                   onChange={(e) => {
                     setEduData({
                       ...eduData,
@@ -196,6 +213,7 @@ export default function EducationInfo({
         })}
         <Holder style={{ maxWidth: "289px" }}>
           <Button
+            type="button"
             style={{ height: "48px", width: "100%" }}
             onClick={() => {
               append({
@@ -224,10 +242,10 @@ export default function EducationInfo({
         <Holder
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
-          <ButtonBold onClick={() => navigate("/experienceinfo")}>
+          <ButtonBold type="button" onClick={() => navigate("/experienceinfo")}>
             უკან
           </ButtonBold>
-          <ButtonBold>დასასრული</ButtonBold>
+          <ButtonBold type="submit">დასასრული</ButtonBold>
         </Holder>
       </Wrapper>
     </form>

@@ -31,7 +31,7 @@ const ResumeDiv = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: relative;
   background-color: white;
   padding: 40px;
@@ -183,7 +183,7 @@ export default function LastPage({
                 <Line />
                 <Title>განათლება</Title>
                 <Paragraph>
-                  {edu.institute}, {setDegreeTitle(edu.degree_id)}
+                  {edu.institute}, {edu.degree}
                 </Paragraph>
                 <Paragraph style={{ fontStyle: "italic", opacity: "0.7" }}>
                   {edu.due_date}

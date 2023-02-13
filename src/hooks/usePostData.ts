@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { removeEmpty } from "../utils";
 
 type Data = {
   name: string;
@@ -21,7 +22,11 @@ const usePostData = (data: Data) => {
         responseType: "blob",
       });
       const file = new File([res.data], "image", { type: "image/png" });
-      const modifiedData = { ...data, image: file };
+      const modifiedData = {
+        ...data,
+        image: file,
+        educations: removeEmpty(data.educations),
+      };
 
       const response = await axios.post(
         "https://resume.redberryinternship.ge/api/cvs",

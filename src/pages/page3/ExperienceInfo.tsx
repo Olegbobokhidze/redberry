@@ -72,6 +72,7 @@ export default function ExperienceInfo({
       navigate("/educationinfo");
     }
   };
+
   const navigate = useNavigate();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
