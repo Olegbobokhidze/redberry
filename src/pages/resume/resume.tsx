@@ -17,7 +17,7 @@ import {
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";
-import { FormattedNumber, setDegreeTitle } from "../../utils";
+import { FormattedNumber } from "../../utils";
 import { EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";
 interface Props {
   infoData: InfoSchemaType;
@@ -26,14 +26,6 @@ interface Props {
   eduData: EduTypes;
 }
 export default function Resume({ infoData, photo, expData, eduData }: Props) {
-  const lastEdu = (arr: any) => {
-    const lastDiv = arr[arr.length - 1];
-    if (lastDiv) {
-      return { marginBottom: "100px" };
-    } else {
-      return { marginBottom: "10px" };
-    }
-  };
   return (
     <Wrapper>
       <PersonalInfoHolder>

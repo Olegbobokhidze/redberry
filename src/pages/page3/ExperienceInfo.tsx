@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   HeaderWrapper,
   Wrapper,
@@ -26,7 +26,6 @@ import {
   BackToStarterPage,
   BorderColorFunction,
   FunctionShowLogo,
-  isRequired,
   removeEmptyObjects,
 } from "../../utils";
 interface Props {

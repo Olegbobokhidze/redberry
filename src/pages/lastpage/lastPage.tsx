@@ -18,11 +18,7 @@ import { Holder } from "../styled";
 import Phone from "../../assets/Phone.png";
 import Mail from "../../assets/Mail.png";
 import RedLogo from "../../assets/RedLogo.png";
-import {
-  BackToStarterPage,
-  FormattedNumber,
-  setDegreeTitle,
-} from "../../utils";
+import { BackToStarterPage, FormattedNumber } from "../../utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { EduTypes, ExpTypes, InfoSchemaType } from "../InfoTypes";

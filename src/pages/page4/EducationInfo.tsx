@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   HeaderWrapper,
   Wrapper,
@@ -27,9 +27,6 @@ import {
   BorderColorFunction,
   FunctionShowLogo,
   isRequired,
-  removeEmpty,
-  removeEmptyObjects,
-  setDegreeTitle,
 } from "../../utils";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
