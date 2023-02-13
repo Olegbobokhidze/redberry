@@ -37,19 +37,12 @@ export const ExpSchema = z.object({
 });
 export const EduSchema = z.object({
   educations: z.array(
-    z
-      .object({
-        institute: z.string(),
-        degree_id: z.number(),
-        due_date: z.string(),
-        description: z.string(),
-      })
-      .refine(
-        (data) =>
-          Object.values(data).every((val) => val) ||
-          Object.values(data).every((val) => !val),
-        "must be every field empty or filled"
-      )
+    z.object({
+      institute: z.string(),
+      degree_id: z.number(),
+      due_date: z.string(),
+      description: z.string(),
+    })
   ),
 });
 export type EduTypes = z.infer<typeof EduSchema>;

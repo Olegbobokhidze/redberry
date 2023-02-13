@@ -110,9 +110,7 @@ export default function EducationInfo({
                 <ValidationImages>
                   <Input
                     value={eduData.educations[index]?.institute}
-                    {...register(`educations.${index}.institute`, {
-                      required: isRequired(eduData.educations[index], index),
-                    })}
+                    {...register(`educations.${index}.institute`)}
                     style={BorderColorFunction(
                       watch(`educations.${index}.institute`),
                       errors.educations?.[index]?.institute
@@ -175,9 +173,7 @@ export default function EducationInfo({
                       watch(`educations.${index}.due_date`),
                       errors.educations?.[index]?.due_date
                     )}
-                    {...register(`educations.${index}.due_date`, {
-                      required: isRequired(eduData.educations[index], index),
-                    })}
+                    {...register(`educations.${index}.due_date`)}
                     onChange={(e) => {
                       setEduData({
                         ...eduData,
@@ -195,9 +191,7 @@ export default function EducationInfo({
                 <ParagraphBold>აღწერა</ParagraphBold>
 
                 <InputArea
-                  {...register(`educations.${index}.description`, {
-                    required: isRequired(eduData.educations[index], index),
-                  })}
+                  {...register(`educations.${index}.description`)}
                   style={BorderColorFunction(
                     watch(`educations.${index}.description`),
                     errors.educations?.[index]?.description

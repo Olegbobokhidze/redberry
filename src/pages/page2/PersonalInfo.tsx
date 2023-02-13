@@ -79,7 +79,6 @@ export default function PersonalInfo({
   const navigate = useNavigate();
   const onSubmit = (data: InfoSchemaType): void => {
     if (photo && PersonalInfoSchema.safeParse(data).success) {
-      console.log(PersonalInfoSchema.safeParse(data));
       navigate("/experienceinfo");
     } else {
       setError(true);

@@ -67,7 +67,6 @@ export default function ExperienceInfo({
       removeEmptyObjects(data.experiences, setExpData);
       navigate("/educationinfo");
     } else {
-      console.log(ExpSchema.parse(data));
       navigate("/educationinfo");
     }
   };

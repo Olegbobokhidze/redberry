@@ -37,8 +37,6 @@ const usePostData = (data: Data) => {
           },
         }
       );
-      console.log(response.status);
-      console.log(response.data);
       navigate("/resume", {
         state: response.data,
       });
